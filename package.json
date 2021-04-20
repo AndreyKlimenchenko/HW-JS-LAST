@@ -1,0 +1,24 @@
+{
+  "name": "hw-js-last",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyKlimenchenko/HW-JS-LAST.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyKlimenchenko/HW-JS-LAST/issues"
+  },
+  "homepage": "https://github.com/AndreyKlimenchenko/HW-JS-LAST#readme",
+  "dependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
