@@ -38,8 +38,8 @@ class Main {
             infoContainer.appendChild(category);
             description.innerHTML = element.description;
             title.innerHTML = element.title;
-            price.innerHTML = element.price;
-            category.innerHTML = element.category;
+            price.innerHTML = `Price: ${element.price}$`;
+            category.innerHTML = `Category: ${element.category}`;
         });
     }
 }
