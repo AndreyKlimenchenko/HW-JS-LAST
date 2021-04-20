@@ -5,7 +5,12 @@ class App {
     create() {
         const newDiv = document.createElement('div');
         newDiv.classList.add('app');
-        this.element = newDiv; 
+        this.element = newDiv;
+        fetch("https://fakestoreapi.com/products/")
+        .then((response) => response.json())
+        .then((products) => {
+            localStorage.setItem('products', JSON.stringify(products));
+        });
     }
     render() {
         document.body.appendChild(this.element);

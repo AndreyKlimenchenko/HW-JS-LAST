@@ -144,6 +144,11 @@ var App = /*#__PURE__*/function () {
       var newDiv = document.createElement('div');
       newDiv.classList.add('app');
       this.element = newDiv;
+      fetch("https://fakestoreapi.com/products/").then(function (response) {
+        return response.json();
+      }).then(function (products) {
+        localStorage.setItem('products', JSON.stringify(products));
+      });
     }
   }, {
     key: "render",
@@ -171,13 +176,91 @@ var App = /*#__PURE__*/function () {
 var _default = new App().init();
 
 exports.default = _default;
+},{}],"components/Main.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.main = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Main = /*#__PURE__*/function () {
+  function Main() {
+    _classCallCheck(this, Main);
+
+    this.element = null;
+  }
+
+  _createClass(Main, [{
+    key: "create",
+    value: function create() {
+      var main = document.createElement('div');
+      main.classList.add('main');
+      this.element = main;
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.create();
+      document.body.appendChild(this.element);
+      var savedProducts = localStorage.getItem('products');
+      var products = JSON.parse(savedProducts);
+      products.forEach(function (element) {
+        var container = document.createElement('div');
+        container.classList.add('container');
+        var title = document.createElement('div');
+        title.classList.add('title');
+        var price = document.createElement('div');
+        price.classList.add('price');
+        var infoContainer = document.createElement('div');
+        infoContainer.classList.add('infoContainer');
+        var image = document.createElement('img');
+        image.classList.add('img');
+        image.setAttribute('alt', element.title);
+        image.setAttribute('src', element.image);
+        var description = document.createElement('p');
+        description.classList.add('description');
+        var category = document.createElement('span');
+        category.classList.add('category');
+
+        _this.element.appendChild(container);
+
+        container.appendChild(image);
+        container.appendChild(infoContainer);
+        infoContainer.appendChild(title);
+        infoContainer.appendChild(price);
+        infoContainer.appendChild(description);
+        infoContainer.appendChild(category);
+        description.innerHTML = element.description;
+        title.innerHTML = element.title;
+        price.innerHTML = element.price;
+        category.innerHTML = element.category;
+      });
+    }
+  }]);
+
+  return Main;
+}();
+
+var main = new Main().init();
+exports.main = main;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _App = _interopRequireDefault(require("./components/App.js"));
 
+var _Main = require("./components/Main.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./components/App.js":"components/App.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./components/App.js":"components/App.js","./components/Main.js":"components/Main.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
