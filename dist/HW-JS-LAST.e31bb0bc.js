@@ -175,6 +175,51 @@ var App = /*#__PURE__*/function () {
 var _default = new App().init();
 
 exports.default = _default;
+},{}],"components/Header.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.header = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Header = /*#__PURE__*/function () {
+  function Header() {
+    _classCallCheck(this, Header);
+
+    this.element = null;
+  }
+
+  _createClass(Header, [{
+    key: "create",
+    value: function create() {
+      var header = document.createElement('header');
+      header.classList.add('header');
+      this.element = header;
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.create();
+      document.body.appendChild(this.element);
+      var svgContainer = document.createElement('div');
+      svgContainer.classList.add('svgContain');
+      this.element.appendChild(svgContainer);
+      svgContainer.innerHTML = "<svg class=\"svg\" version=\"1.1\" id=\"Capa_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n         viewBox=\"0 0 510 510\" style=\"enable-background:new 0 0 510 510;\" xml:space=\"preserve\">\n   <g>\n       <g id=\"shopping-cart\">\n           <path d=\"M153,408c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S181.05,408,153,408z M0,0v51h51l91.8,193.8L107.1,306\n               c-2.55,7.65-5.1,17.85-5.1,25.5c0,28.05,22.95,51,51,51h306v-51H163.2c-2.55,0-5.1-2.55-5.1-5.1v-2.551l22.95-43.35h188.7\n               c20.4,0,35.7-10.2,43.35-25.5L504.9,89.25c5.1-5.1,5.1-7.65,5.1-12.75c0-15.3-10.2-25.5-25.5-25.5H107.1L84.15,0H0z M408,408\n               c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S436.05,408,408,408z\"/>\n       </g></g></svg>";
+    }
+  }]);
+
+  return Header;
+}();
+
+var header = new Header().init();
+exports.header = header;
 },{}],"components/Main.js":[function(require,module,exports) {
 "use strict";
 
@@ -256,10 +301,12 @@ exports.main = main;
 
 var _App = _interopRequireDefault(require("./components/App.js"));
 
+var _Header = require("./components/Header.js");
+
 var _Main = require("./components/Main.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./components/App.js":"components/App.js","./components/Main.js":"components/Main.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./components/App.js":"components/App.js","./components/Header.js":"components/Header.js","./components/Main.js":"components/Main.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -287,7 +334,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50010" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51924" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

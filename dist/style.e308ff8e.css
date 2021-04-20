@@ -1,3 +1,7 @@
+body {
+    margin: 0px;
+}
+
 .img {
     width: 120px;
     margin-right: 20px;
@@ -32,10 +36,37 @@
 }
 
 .main {
+    margin-top: 70px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 15px;
 }
+
+.header {
+    height: 70px;
+    width: 100%;
+    background-color: rgb(31, 25, 98);
+    color: white;
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.svg {
+    fill: white;
+    width: 40px;
+    cursor: pointer;
+}
+
+.svg:hover {
+    fill: rgb(167, 212, 225);
+}
+
+
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */
