@@ -1,11 +1,21 @@
+import {setCookie} from './cookieHelper.js';
+
 class Main {
     constructor() {
         this.element = null;
+        this.products = [];
     }
     create() {
         const main = document.createElement('div');
         main.classList.add('main');
         this.element = main; 
+    }
+    addToCart(e, product) {
+        this.products.push(product);
+        setCookie('products', JSON.stringify(this.products));
+        const svgCart = document.querySelector('.svgContain');
+        const badge = document.querySelector('.badge');
+        badge.innerHTML= this.products.length;
     }
     init() {
         this.create();
@@ -40,6 +50,11 @@ class Main {
             title.innerHTML = element.title;
             price.innerHTML = `Price: ${element.price}$`;
             category.innerHTML = `Category: ${element.category}`;
+            const addBtn = document.createElement('button');
+            addBtn.classList.add('addBtn');
+            addBtn.innerHTML = 'add to cart';
+            infoContainer.appendChild(addBtn);
+            addBtn.addEventListener('click', (e) => this.addToCart(e, element));
         });
     }
 }

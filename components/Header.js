@@ -1,3 +1,5 @@
+import {getCookie} from './cookieHelper.js';
+
 class Header {
     constructor() {
         this.element = null;
@@ -6,6 +8,47 @@ class Header {
         const header = document.createElement('header');
         header.classList.add('header');
         this.element = header; 
+    }
+    createBasketPage() {
+        const main = document.querySelector('.main');
+        const products = JSON.parse(getCookie('products'));
+        console.log(JSON.parse(products));
+        main.innerHTML = null;
+        window.location.hash = 'cart';
+        JSON.parse(products).forEach(element => {
+            const container = document.createElement('div');
+            container.classList.add('container');
+            const title = document.createElement('div');
+            title.classList.add('title');
+            const price = document.createElement('div');
+            price.classList.add('price');
+            const infoContainer = document.createElement('div');
+            infoContainer.classList.add('infoContainer');
+            const image = document.createElement('img');
+            image.classList.add('img');
+            image.setAttribute('alt', element.title);
+            image.setAttribute('src', element.image);
+            const description = document.createElement('p');
+            description.classList.add('description');
+            const category = document.createElement('span');
+            category.classList.add('category');
+            main.appendChild(container);
+            container.appendChild(image);
+            container.appendChild(infoContainer);
+            infoContainer.appendChild(title);
+            infoContainer.appendChild(price);
+            infoContainer.appendChild(description);
+            infoContainer.appendChild(category);
+            description.innerHTML = element.description;
+            title.innerHTML = element.title;
+            price.innerHTML = `Price: ${element.price}$`;
+            category.innerHTML = `Category: ${element.category}`;
+            const addBtn = document.createElement('button');
+            addBtn.classList.add('addBtn');
+            addBtn.innerHTML = 'add to cart';
+            infoContainer.appendChild(addBtn);
+            addBtn.addEventListener('click', (e) => this.addToCart(e, element));
+        });
     }
     init() {
         this.create();
@@ -22,6 +65,10 @@ class Header {
                c20.4,0,35.7-10.2,43.35-25.5L504.9,89.25c5.1-5.1,5.1-7.65,5.1-12.75c0-15.3-10.2-25.5-25.5-25.5H107.1L84.15,0H0z M408,408
                c-28.05,0-51,22.95-51,51s22.95,51,51,51s51-22.95,51-51S436.05,408,408,408z"/>
        </g></g></svg>`;
+       const badge = document.createElement('div');
+       badge.classList.add('badge');
+       svgContainer.appendChild(badge);
+       svgContainer.addEventListener('click', this.createBasketPage);
     }
 }
 
