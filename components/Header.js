@@ -1,8 +1,9 @@
-import {getCookie} from './cookieHelper.js';
+import {getCookie, setCookie} from './cookieHelper.js';
 
 class Header {
     constructor() {
         this.element = null;
+        this.products = [];
     }
     create() {
         const header = document.createElement('header');
@@ -12,12 +13,16 @@ class Header {
     createBasketPage() {
         const main = document.querySelector('.main');
         const products = JSON.parse(getCookie('products'));
-        console.log(JSON.parse(products));
         main.innerHTML = null;
         window.location.hash = 'cart';
-        JSON.parse(products).forEach(element => {
+        let calculatedPrice = 0;
+        const allProducts = JSON.parse(products);
+        this.products = allProducts;
+        console.log(allProducts);
+        this.products.forEach(element => {
             const container = document.createElement('div');
             container.classList.add('container');
+            container.setAttribute('id',element.id);
             const title = document.createElement('div');
             title.classList.add('title');
             const price = document.createElement('div');
@@ -43,12 +48,30 @@ class Header {
             title.innerHTML = element.title;
             price.innerHTML = `Price: ${element.price}$`;
             category.innerHTML = `Category: ${element.category}`;
-            const addBtn = document.createElement('button');
-            addBtn.classList.add('addBtn');
-            addBtn.innerHTML = 'add to cart';
-            infoContainer.appendChild(addBtn);
-            addBtn.addEventListener('click', (e) => this.addToCart(e, element));
+            calculatedPrice = calculatedPrice + Number(element.price);
+            const delBtn = document.createElement('button');
+            delBtn.classList.add('delBtn');
+            delBtn.innerHTML = 'remove';
+            infoContainer.appendChild(delBtn);
+            delBtn.addEventListener('click', () => {
+                this.products = this.products.filter(item => item.id !== element.id);
+                setCookie('products', this.products);
+                const removeElement = document.getElementById(`${element.id}`);
+                main.removeChild(removeElement);
+                calculatedPrice = calculatedPrice - Number(element.price);
+                totalPrice.innerHTML = `price: ${calculatedPrice.toFixed(2)}`;
+                const counts = document.querySelector('.badge');
+                counts.innerHTML = this.products.length;
+                if(this.products.length === 0){
+                    const totalPrice = document.querySelector('.totalPrice');
+                    totalPrice.innerHTML = 'price: 0';
+                }
+            });
         });
+        const totalPrice = document.createElement('div');
+        totalPrice.classList.add('totalPrice');
+        main.appendChild(totalPrice);
+        totalPrice.innerHTML = `price: ${calculatedPrice.toFixed(2)}`;
     }
     init() {
         this.create();
@@ -69,6 +92,7 @@ class Header {
        badge.classList.add('badge');
        svgContainer.appendChild(badge);
        svgContainer.addEventListener('click', this.createBasketPage);
+       badge.innerHTML = this.products.length;
     }
 }
 

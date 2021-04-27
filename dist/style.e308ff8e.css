@@ -67,6 +67,82 @@ body {
     fill: rgb(167, 212, 225);
 }
 
+.totalPrice {
+    position: fixed;
+    right: 10px;
+    top: 80px;
+    font-size: 24px;
+    font-weight: bold;
+}
 
+.svgContain {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: -9px;
+    right: -10px;
+    z-index: 1;
+    background-color: blue;
+    border-radius: 50%;
+    padding: 4px;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+}
+
+.addBtn, .delBtn {
+    text-transform: uppercase;
+    border: none;
+    padding: 10px;
+    background-color: bisque;
+    border-radius: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.addBtn:hover, .delBtn:hover {
+    background-color: rgb(234, 185, 126);
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal {
+    position: absolute;
+    z-index: 3;
+    background-color: white;
+    padding: 25px;
+    border-radius: 16px;
+    top: 200px;
+    left: 0px;
+    right: 0px;
+    margin: 0px auto;
+    width: 400px;
+}
+
+.modalBcg {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    min-width: 100%;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: none;
+    border: none;
+}
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */

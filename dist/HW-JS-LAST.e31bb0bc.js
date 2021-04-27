@@ -224,6 +224,7 @@ var Header = /*#__PURE__*/function () {
     _classCallCheck(this, Header);
 
     this.element = null;
+    this.products = [];
   }
 
   _createClass(Header, [{
@@ -240,12 +241,16 @@ var Header = /*#__PURE__*/function () {
 
       var main = document.querySelector('.main');
       var products = JSON.parse((0, _cookieHelper.getCookie)('products'));
-      console.log(JSON.parse(products));
       main.innerHTML = null;
       window.location.hash = 'cart';
-      JSON.parse(products).forEach(function (element) {
+      var calculatedPrice = 0;
+      var allProducts = JSON.parse(products);
+      this.products = allProducts;
+      console.log(allProducts);
+      this.products.forEach(function (element) {
         var container = document.createElement('div');
         container.classList.add('container');
+        container.setAttribute('id', element.id);
         var title = document.createElement('div');
         title.classList.add('title');
         var price = document.createElement('div');
@@ -271,14 +276,34 @@ var Header = /*#__PURE__*/function () {
         title.innerHTML = element.title;
         price.innerHTML = "Price: ".concat(element.price, "$");
         category.innerHTML = "Category: ".concat(element.category);
-        var addBtn = document.createElement('button');
-        addBtn.classList.add('addBtn');
-        addBtn.innerHTML = 'add to cart';
-        infoContainer.appendChild(addBtn);
-        addBtn.addEventListener('click', function (e) {
-          return _this.addToCart(e, element);
+        calculatedPrice = calculatedPrice + Number(element.price);
+        var delBtn = document.createElement('button');
+        delBtn.classList.add('delBtn');
+        delBtn.innerHTML = 'remove';
+        infoContainer.appendChild(delBtn);
+        delBtn.addEventListener('click', function () {
+          _this.products = _this.products.filter(function (item) {
+            return item.id !== element.id;
+          });
+          (0, _cookieHelper.setCookie)('products', _this.products);
+          var removeElement = document.getElementById("".concat(element.id));
+          main.removeChild(removeElement);
+          calculatedPrice = calculatedPrice - Number(element.price);
+          totalPrice.innerHTML = "price: ".concat(calculatedPrice.toFixed(2));
+          var counts = document.querySelector('.badge');
+          counts.innerHTML = _this.products.length;
+
+          if (_this.products.length === 0) {
+            var _totalPrice = document.querySelector('.totalPrice');
+
+            _totalPrice.innerHTML = 'price: 0';
+          }
         });
       });
+      var totalPrice = document.createElement('div');
+      totalPrice.classList.add('totalPrice');
+      main.appendChild(totalPrice);
+      totalPrice.innerHTML = "price: ".concat(calculatedPrice.toFixed(2));
     }
   }, {
     key: "init",
@@ -293,6 +318,7 @@ var Header = /*#__PURE__*/function () {
       badge.classList.add('badge');
       svgContainer.appendChild(badge);
       svgContainer.addEventListener('click', this.createBasketPage);
+      badge.innerHTML = this.products.length;
     }
   }]);
 
@@ -335,11 +361,61 @@ var Main = /*#__PURE__*/function () {
   }, {
     key: "addToCart",
     value: function addToCart(e, product) {
+      var isExist = this.products.find(function (item) {
+        return item.id === product.id;
+      });
+
+      if (isExist) {
+        alert('уже добавлен');
+        return;
+      }
+
       this.products.push(product);
       (0, _cookieHelper.setCookie)('products', JSON.stringify(this.products));
       var svgCart = document.querySelector('.svgContain');
       var badge = document.querySelector('.badge');
       badge.innerHTML = this.products.length;
+    }
+  }, {
+    key: "getElementDetails",
+    value: function getElementDetails(e, element) {
+      var modalBcg = document.createElement('div');
+      modalBcg.classList.add('modalBcg');
+      document.body.appendChild(modalBcg);
+      var modal = document.createElement('div');
+      modal.classList.add('modal');
+      modalBcg.appendChild(modal);
+      var title = document.createElement('div');
+      title.classList.add('title');
+      var price = document.createElement('div');
+      price.classList.add('price');
+      var infoContainer = document.createElement('div');
+      infoContainer.classList.add('infoContainer');
+      var image = document.createElement('img');
+      image.classList.add('img');
+      image.setAttribute('alt', element.title);
+      image.setAttribute('src', element.image);
+      var description = document.createElement('p');
+      description.classList.add('description');
+      var category = document.createElement('span');
+      category.classList.add('category');
+      modal.appendChild(image);
+      modal.appendChild(infoContainer);
+      infoContainer.appendChild(title);
+      infoContainer.appendChild(price);
+      infoContainer.appendChild(description);
+      infoContainer.appendChild(category);
+      description.innerHTML = element.description;
+      title.innerHTML = element.title;
+      price.innerHTML = "Price: ".concat(element.price, "$");
+      category.innerHTML = "Category: ".concat(element.category);
+      var close = document.createElement('button');
+      close.classList.add('close');
+      close.innerHTML = 'X';
+      modal.appendChild(close);
+      close.addEventListener('click', function () {
+        document.body.removeChild(modalBcg);
+      });
     }
   }, {
     key: "init",
@@ -353,6 +429,9 @@ var Main = /*#__PURE__*/function () {
       products.forEach(function (element) {
         var container = document.createElement('div');
         container.classList.add('container');
+        container.addEventListener('click', function (e) {
+          return _this.getElementDetails(e, element);
+        });
         var title = document.createElement('div');
         title.classList.add('title');
         var price = document.createElement('div');
@@ -382,7 +461,7 @@ var Main = /*#__PURE__*/function () {
         category.innerHTML = "Category: ".concat(element.category);
         var addBtn = document.createElement('button');
         addBtn.classList.add('addBtn');
-        addBtn.innerHTML = 'add to cart';
+        addBtn.innerHTML = 'add';
         infoContainer.appendChild(addBtn);
         addBtn.addEventListener('click', function (e) {
           return _this.addToCart(e, element);
@@ -434,7 +513,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58028" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55025" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
